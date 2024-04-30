@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&family=Inter:wght@100..900&display=swap" rel="stylesheet">    
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Where’s your &lt;3</title>
+</head>
+<body>
+    <h1 class="title-head">Where’s your &lt;3</h1>
+    <div class="container">
+        <div id="postContainer" class="container"></div>
+    </div>
+    <button id="addPostButton">Leave a note</button>
+    <button id="addFirebasePostButton">Create Firebase Post</button>
+    <div id="addPostModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>My heart is...</h2>
+            <textarea id="postTextArea" placeholder="Write your message..."></textarea>
+            <button id="postButton">Post</button>
+        </div>
+    </div>    
+    <div id="postContent"></div>
+    <button id="infoButton">Info</button>
+    <div id="infoText" class="hidden">
+        <h3 class="info">Inspired by the Portuguese term "Saudade," which conveys a deep emotional state of nostalgic or profound longing, "Where's your &lt;3" is an immersive exploration of transitional spaces. It invites you to contemplate the complex interplay between physical and emotional presence.</h3>
+        <h3 class="info">The installation originally located at 808 Gallery at Boston University challenges the notion that our bodies and hearts are always fully present in the same spaces.</h3> 
+        <h3 class="info">This is a space to immortalize people's thoughts and feelings towards longing or nostalgia. Your body may be looking at this screen, but where is your heart really at?</h3>
+        <h3 class="info">A project by Veridiana Victorelli</h3>
+    </div>
+    <!-- Adicione as importações do Firebase diretamente no HTML -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js"></script>
+    <!-- Inclua o seu script diretamente aqui -->
+    <script type="module" src="script.js" ></script>
+</body>
+</html>

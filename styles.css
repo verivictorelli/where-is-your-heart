@@ -1,0 +1,272 @@
+body {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    background-image: url(images/josephine-bredehoft-KsAo8ouBn8A-unsplash.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    z-index: 3;
+}
+
+.blur-background::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(2px); /* Adjust blur intensity as needed */
+    z-index: 1;
+}
+  
+.container {
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+  
+#postContainer {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.box-post {
+    cursor: grab;
+    pointer-events: none;
+}
+  
+.post-it {
+    position: absolute;
+    cursor: grab;
+    background-color:#f1ede0;
+    padding: 20px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+    min-width: 120px;
+    max-width: 250px;
+    height: auto;
+    word-wrap: break-word;
+    border-radius: 5px;
+    z-index: 2;
+    user-select: none;
+}
+
+
+.post-it:active, .post-it:focus {
+    cursor: grabbing;
+}
+
+.box-post:active, .box-post:focus {
+    cursor: grabbing;
+}
+
+h2 {
+    font-family: "Instrument Serif", serif;
+    font-style: italic;
+    font-size: 15pt;
+    opacity: 0.8;
+    pointer-events: none;
+    user-select: none;
+    color: #555555;
+}
+
+p {
+    font-family: "Instrument Sans", sans-serif;
+    font-size: 15pt;
+    pointer-events: none;
+    user-select: none;
+    color: #000;
+}
+
+h3 {
+    font-family: "Instrument Sans", sans-serif;
+    font-weight: 200;
+    font-size: 15pt;
+    color: #f1ede0;
+    font-size: 20pt;
+    z-index: 10;
+}
+
+.title-head {
+    z-index: 10;
+}
+
+.new-post-it {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fefbf1;
+    width: 400px;
+    height: 300px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    z-index: 100; /* Ensure it's on top of everything else */
+    text-align: center;
+}
+
+.new-post-it h2 {
+    font-family: "Instrument Serif", serif;
+    font-size: 24px;
+    margin-top: 0;
+}
+
+.new-post-it textarea {
+    font-family: "Instrument Sans", sans-serif;
+    font-size: 20pt;
+    width: calc(100% - 40px);
+    height: calc(100% - 140px);
+    padding: 10px;
+    resize: none;
+    background-color: #fefbf1;
+    border-color: transparent;
+    border-radius: 5px;
+    text-align: center;
+}
+
+textarea:focus {
+    outline: none;
+    text-align: center;
+}
+
+
+.new-post-it button {
+    font-family: "Instrument Serif", serif;
+    font-size: 15pt;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: transparent;
+    color: #000;
+    border: none;
+    cursor: pointer;
+}
+
+.new-post-it button:hover {
+    font-style: italic;
+}
+  
+#infoText {
+    padding: 20px;
+    margin-top: 50px;
+    text-align: left;
+    width: calc(100vw - 50%);
+    position: absolute;
+    overflow: auto;
+    max-height: 600px;
+    box-sizing: border-box;
+    padding-bottom: 50vh;
+    z-index: 4;
+}
+
+.hidden {
+    display: none;
+}
+
+#addPostButton {
+    z-index: 6;
+    font-family: "Instrument Serif", serif;
+    font-weight: 100;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    color: #fff;
+    background-color: transparent;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: color 0.5s, border-color 0.5s;
+    font-size: 30pt;
+}
+
+#addPostButton:hover {
+    font-style: italic;
+}
+
+#infoButton {
+    z-index: 101;
+    font-family: "Instrument Serif", serif;
+    font-weight: 200;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    color: #fff;
+    background-color: transparent;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 15pt;
+}
+  
+#infoButton:hover {
+    text-decoration: underline;
+}
+
+h1 {
+    z-index: 102;
+    font-family: "Instrument Serif", serif;
+    font-weight: 400;
+    font-style: italic;
+    color: #fff;
+    font-size: 60pt;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    margin: 0px;
+    pointer-events: none; /* Allow clicks to pass through */
+    text-shadow: 2px 2px 60px rgba(0, 0, 0, 0.4); /* Adding drop shadow */
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 300px; /* Adjust height as needed */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+    pointer-events: none; /* Allow clicks to pass through */
+    z-index: 5; /* Ensure the gradient is above the post-it notes */
+}
+
+/* Modal styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
