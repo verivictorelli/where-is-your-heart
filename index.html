@@ -15,23 +15,31 @@
     <div class="container">
         <div id="postContainer" class="container"></div>
     </div>
-    <button id="addPostButton">Leave a note</button>
-    <button id="addFirebasePostButton">Create Firebase Post</button>
+    <!-- <button id="addPostButton">Leave a note</button> -->
+    <button id="addFirebasePostButton">Leave a note</button>
     <div id="addPostModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
             <h2>My heart is...</h2>
-            <textarea id="postTextArea" placeholder="Write your message..."></textarea>
+            <textarea id="postTextArea" placeholder="...at home with my dog and 2 cats"></textarea>
+            <span class="close">Close</span>
             <button id="postButton">Post</button>
         </div>
     </div>    
     <div id="postContent"></div>
-    <button id="infoButton">Info</button>
-    <div id="infoText" class="hidden">
+    <!-- <button id="infoButton">Info</button> -->
+    <!-- <div id="infoText" class="hidden">
         <h3 class="info">Inspired by the Portuguese term "Saudade," which conveys a deep emotional state of nostalgic or profound longing, "Where's your &lt;3" is an immersive exploration of transitional spaces. It invites you to contemplate the complex interplay between physical and emotional presence.</h3>
         <h3 class="info">The installation originally located at 808 Gallery at Boston University challenges the notion that our bodies and hearts are always fully present in the same spaces.</h3> 
         <h3 class="info">This is a space to immortalize people's thoughts and feelings towards longing or nostalgia. Your body may be looking at this screen, but where is your heart really at?</h3>
         <h3 class="info">A project by Veridiana Victorelli</h3>
+    </div> -->
+    <button id="moreInfoButton">Info</button>
+    <div id="infoText" class="hidden">
+        <h3 class="info">Inspired by the Portuguese term "Saudade," which conveys a deep emotional state of nostalgic or profound longing, "Where's your &lt;3" is an immersive exploration of transitional spaces. It invites you to contemplate the complex interplay between physical and emotional presence.</h3>
+        <h3 class="info">The installation originally located at 808 Gallery at Boston University challenges the notion that our bodies and hearts are always fully present in the same spaces.</h3> 
+        <h3 class="info">This is a space to immortalize people's thoughts and feelings towards longing or nostalgia. Your body may be looking at this screen, but where is your heart really at?</h3>
+        <h3 class="names">A project by Veridiana Victorelli, 2024</h3>
+        <h3 class="names">Firebase integration by Louis Nunes</h3>
     </div>
     <!-- Adicione as importações do Firebase diretamente no HTML -->
     <script type="module" src="https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js"></script>

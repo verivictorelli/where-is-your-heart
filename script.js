@@ -18,61 +18,79 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-let zIndexCounter = 1;
 const MAX_TOP = window.innerHeight * 0.8 - 100;
 const MAX_LEFT = window.innerWidth * 0.8 - 100;
 
 document.addEventListener('DOMContentLoaded', () => {
-    updateScreenFromFirestore();
+    const moreInfoButton = document.getElementById('moreInfoButton');
+    const infoText = document.getElementById('infoText');
+    const postContainer = document.getElementById('postContainer');
+    let isInfoVisible = false;
+    let isPostTextVisible = false;
 
-    document.getElementById('addPostButton').addEventListener('click', () => {
-        document.body.classList.add('blur-background');
-        const addPostSection = document.createElement('div');
-        addPostSection.id = 'addPostSection';
-        addPostSection.innerHTML = `
-            <div class="new-post-it" id="newPostIt">
-                <h2>My heart is...</h2>
-                <textarea id="postTextArea" placeholder="Write your message..."></textarea>
-                <button id="closeButton">Close</button>
-                <button id="postButton">Post</button>
-            </div>
-        `;
-        document.body.appendChild(addPostSection);
-
-        const newPostIt = document.getElementById('newPostIt');
-        newPostIt.style.zIndex = zIndexCounter++;
-
-        document.getElementById('postButton').addEventListener('click', () => {
-            document.body.classList.remove('blur-background');
-            const postTextArea = document.getElementById('postTextArea');
-            const message = postTextArea.value.trim();
-            if (message !== '') {
-                const top = getRandomPosition(MAX_TOP);
-                const left = getRandomPosition(MAX_LEFT);
-                addPost(message, top, left);
-                addPostSection.remove();
+    moreInfoButton.addEventListener('click', () => {
+        isInfoVisible = !isInfoVisible;
+        
+        if (isInfoVisible) {
+            if (isPostTextVisible){
+                isPostTextVisible = !isPostTextVisible;
+                document.getElementById('addPostModal').style.display = 'none';
+                document.body.classList.remove('blur-background');
+                postTextArea.value = '';
             }
-        });
-
-        document.getElementById('closeButton').addEventListener('click', () => {
-            document.body.classList.remove('blur-background');
-            addPostSection.remove();
-        });
-    });
-
-    document.getElementById('infoButton').addEventListener('click', () => {
-        document.body.classList.toggle('blur-background');
-        const infoText = document.getElementById('infoText');
-        infoText.classList.toggle('hidden');
-        const infoButton = document.getElementById('infoButton');
-        if (infoText.classList.contains('hidden')) {
-            infoButton.innerText = 'Info';
-            updateScreenFromFirestore();
+            infoText.classList.remove('hidden');
+            moreInfoButton.innerText = 'Close';
+            postContainer.classList.add('hidden');
+            document.body.classList.add('blur-background');
         } else {
-            infoButton.innerText = 'Close';
-            document.getElementById('postContainer').innerHTML = '';
+            infoText.classList.add('hidden');
+            moreInfoButton.innerText = 'Info';
+            postContainer.classList.remove('hidden');
+            document.body.classList.remove('blur-background');
         }
     });
+
+    document.getElementById('addFirebasePostButton').addEventListener('click', () => {
+        isPostTextVisible = !isPostTextVisible
+        if (isInfoVisible) {
+            isInfoVisible = !isInfoVisible;
+            infoText.classList.add('hidden');
+            moreInfoButton.innerText = 'Info';
+            postContainer.classList.remove('hidden');
+            document.body.classList.remove('blur-background');
+        }
+        document.body.classList.add('blur-background');
+        const addPostModal = document.getElementById('addPostModal');
+        addPostModal.style.display = 'block';
+
+        // Event listener for the close button
+        document.getElementsByClassName('close')[0].addEventListener('click', () => {
+            isPostTextVisible = !isPostTextVisible
+            document.body.classList.remove('blur-background');
+            addPostModal.style.display = 'none';
+            postTextArea.value = '';
+        });
+    });
+    
+    // Event listener for the post button
+    document.getElementById('postButton').addEventListener('click', async () => {
+        const postTextArea = document.getElementById('postTextArea');
+        const message = postTextArea.value.trim();
+        if (message !== '') {
+            const top = getRandomPosition(MAX_TOP)*(window.innerHeight/MAX_TOP);
+            const left = getRandomPosition(MAX_LEFT)*(window.innerWidth/MAX_LEFT);
+            
+            await addPostToFirestore(message, top, left);
+            document.body.classList.remove('blur-background');
+            addPostModal.style.display = 'none';
+            updateScreenFromFirestore();
+            postTextArea.value = '';
+        } else {
+            
+        }
+    });
+
+    updateScreenFromFirestore();
 });
 
 async function updateScreenFromFirestore() {
@@ -93,60 +111,24 @@ async function updateScreenFromFirestore() {
     }
 }
 
-
-// Event listener for the button to open the modal
-document.getElementById('addFirebasePostButton').addEventListener('click', () => {
-    document.body.classList.add('blur-background');
-    const addPostModal = document.getElementById('addPostModal');
-    addPostModal.style.display = 'block';
-
-    // Event listener for the close button
-    document.getElementsByClassName('close')[0].addEventListener('click', () => {
-        document.body.classList.remove('blur-background');
-        addPostModal.style.display = 'none';
-    });
-
-    // Event listener for the post button
-    document.getElementById('postButton').addEventListener('click', async () => {
-        const postTextArea = document.getElementById('postTextArea');
-        const message = postTextArea.value.trim();
-        if (message !== '') {
-            const top = getRandomPosition(MAX_TOP);
-            const left = getRandomPosition(MAX_LEFT);
-            await addPostToFirestore(message, top, left);
-            document.body.classList.remove('blur-background');
-            addPostModal.style.display = 'none';
-        }
-    });
-});
-
-// Function to add the post to Firestore
 async function addPostToFirestore(message, top, left) {
     try {
-        const docRef = await addDoc(collection(db, "posts"), {
+        await addDoc(collection(db, "posts"), {
             message: message,
             top: top,
             left: left
         });
-        console.log("Document written with ID: ", docRef.id);
     } catch (e) {
         console.error("Error adding document: ", e);
     }
 }
-
-function addPost(message, top, left) {
-    const posts = JSON.parse(localStorage.getItem('posts')) || [];
-    posts.push({ message: message, top: top, left: left });
-    localStorage.setItem('posts', JSON.stringify(posts));
-    updateScreenFromFirestore();
-}
-
 
 function getRandomPosition(max) {
     return Math.floor(Math.random() * max);
 }
 
 function createPostIt(message, top, left) {
+    
     const postIt = document.createElement('div');
     postIt.className = 'post-it';
     postIt.innerHTML = `
@@ -155,7 +137,6 @@ function createPostIt(message, top, left) {
     `;
     postIt.style.top = `${top}px`;
     postIt.style.left = `${left}px`;
-    postIt.style.zIndex = zIndexCounter++;
     postIt.style.transform = `rotate(${getRandomRotation()}deg)`;
     postIt.style.backgroundColor = getRandomColor(); 
     postIt.style.transform = `rotate(${getRandomRotation()}deg)`; 
@@ -203,7 +184,6 @@ document.addEventListener('mouseup', function() {
     selectedPost = null;
 });
 
-// Array of background image URLs
 const backgroundImages = [
     'url(images/bg-1.jpg)',
     'url(images/bg-2.jpg)',
@@ -216,11 +196,7 @@ const backgroundImages = [
     'url(images/bg-9.jpg)',
     'url(images/bg-10.jpg)',
     'url(images/bg-11.jpg)',
-    // Add more image URLs as needed
 ];
 
-// Generate a random index to select a background image
 const randomIndex = Math.floor(Math.random() * backgroundImages.length);
-
-// Set the background image of the body
 document.body.style.backgroundImage = backgroundImages[randomIndex];

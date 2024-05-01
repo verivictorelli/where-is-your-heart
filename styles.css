@@ -15,7 +15,7 @@ body {
     content: "";
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(2px); /* Adjust blur intensity as needed */
     z-index: 1;
 }
@@ -81,6 +81,10 @@ p {
     color: #000;
 }
 
+.names {
+    font-size: 12pt;
+}
+
 h3 {
     font-family: "Instrument Sans", sans-serif;
     font-weight: 200;
@@ -94,7 +98,7 @@ h3 {
     z-index: 10;
 }
 
-.new-post-it {
+.modal-content {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -109,13 +113,13 @@ h3 {
     text-align: center;
 }
 
-.new-post-it h2 {
+.modal-content h2 {
     font-family: "Instrument Serif", serif;
     font-size: 24px;
     margin-top: 0;
 }
 
-.new-post-it textarea {
+.modal-content textarea {
     font-family: "Instrument Sans", sans-serif;
     font-size: 20pt;
     width: calc(100% - 40px);
@@ -134,7 +138,7 @@ textarea:focus {
 }
 
 
-.new-post-it button {
+.modal-content button {
     font-family: "Instrument Serif", serif;
     font-size: 15pt;
     padding: 10px 20px;
@@ -145,20 +149,22 @@ textarea:focus {
     cursor: pointer;
 }
 
-.new-post-it button:hover {
+.modal-content button:hover {
     font-style: italic;
 }
   
 #infoText {
-    padding: 20px;
-    margin-top: 50px;
+    margin-top: 70px;
+    /* margin-right: 40%; */
     text-align: left;
-    width: calc(100vw - 50%);
+    /* width: calc(100vw - 50%); */
     position: absolute;
     overflow: auto;
     max-height: 600px;
     box-sizing: border-box;
+    padding: 40px;
     padding-bottom: 50vh;
+    padding-right: 40%;
     z-index: 4;
 }
 
@@ -166,7 +172,7 @@ textarea:focus {
     display: none;
 }
 
-#addPostButton {
+/* #addPostButton {
     z-index: 6;
     font-family: "Instrument Serif", serif;
     font-weight: 100;
@@ -184,9 +190,28 @@ textarea:focus {
 
 #addPostButton:hover {
     font-style: italic;
+} */
+
+#addFirebasePostButton {z-index: 6;
+    font-family: "Instrument Serif", serif;
+    font-weight: 100;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    color: #fff;
+    background-color: transparent;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: color 0.5s, border-color 0.5s;
+    font-size: 30pt;
 }
 
-#infoButton {
+#addFirebasePostButton:hover {
+    font-style: italic;
+}
+
+#moreInfoButton {
     z-index: 101;
     font-family: "Instrument Serif", serif;
     font-weight: 200;
@@ -201,7 +226,7 @@ textarea:focus {
     font-size: 15pt;
 }
   
-#infoButton:hover {
+#moreInfoButton:hover {
     text-decoration: underline;
 }
 
@@ -243,29 +268,23 @@ body::after {
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content/Box */
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    backdrop-filter: blur(2px);
 }
 
 /* Close Button */
 .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+    font-family: "Instrument Serif", serif;
+    font-size: 15pt;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: transparent;
+    color: #000;
+    border: none;
+    cursor: pointer;
 }
 
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
+.close:hover, .close:focus {
+    font-style: italic;
     cursor: pointer;
 }
 
